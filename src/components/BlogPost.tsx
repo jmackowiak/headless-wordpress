@@ -1,4 +1,5 @@
 import { WordPressPost } from '@/lib/wordpress'
+import Link from 'next/link'
 
 interface BlogPostProps {
   post: WordPressPost
@@ -32,12 +33,12 @@ export default function BlogPost({ post }: BlogPostProps) {
         dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
       />
 
-      <a
+      <Link
         href={`/blog/${post.slug}`}
         className="inline-block rounded bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
       >
         Czytaj więcej
-      </a>
+      </Link>
     </article>
   )
 }

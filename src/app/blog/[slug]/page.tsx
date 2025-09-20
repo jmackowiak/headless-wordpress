@@ -1,5 +1,6 @@
 import { getPost, getPosts } from '@/lib/wordpress'
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 
 interface BlogPostPageProps {
   params: {
@@ -46,12 +47,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         />
 
         <div className="mt-8 border-t border-gray-200 pt-6">
-          <a
+          <Link
             href="/blog"
             className="inline-block rounded bg-gray-600 px-4 py-2 text-white transition-colors hover:bg-gray-700"
           >
             ← Powrót do bloga
-          </a>
+          </Link>
         </div>
       </article>
     </div>
