@@ -1,103 +1,68 @@
-import Image from 'next/image'
+import { getPosts } from '@/lib/wordpress'
+import BlogPost from '@/components/BlogPost'
+import Link from 'next/link'
 
-export default function Home() {
+export default async function Home() {
+  const posts = await getPosts()
+  const recentPosts = posts.slice(0, 3) // Pokaż tylko 3 najnowsze posty
+
   return (
-    <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-sans sm:p-20">
-      <main className="row-start-2 flex flex-col items-center gap-[32px] sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-center font-mono text-sm/6 sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{' '}
-            <code className="rounded bg-black/[.05] px-1 py-0.5 font-mono font-semibold dark:bg-white/[.06]">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex flex-col items-center gap-4 sm:flex-row">
-          <a
-            className="bg-foreground text-background flex h-10 items-center justify-center gap-2 rounded-full border border-solid border-transparent px-4 text-sm font-medium transition-colors hover:bg-[#383838] sm:h-12 sm:w-auto sm:px-5 sm:text-base dark:hover:bg-[#ccc]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="min-h-screen bg-gray-50">
+      <main className="container mx-auto px-4 py-12">
+        <div className="mb-12 text-center">
+          <h1 className="mb-4 text-5xl font-bold text-gray-900">
+            Headless WordPress + Next.js
+          </h1>
+          <p className="mb-8 text-xl text-gray-600">
+            Nowoczesny blog zbudowany z Next.js i WordPress jako headless CMS
+          </p>
+          <Link
+            href="/blog"
+            className="inline-block rounded-lg bg-blue-600 px-8 py-3 text-lg font-semibold text-white transition-colors hover:bg-blue-700"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="flex h-10 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-4 text-sm font-medium transition-colors hover:border-transparent hover:bg-[#f2f2f2] sm:h-12 sm:w-auto sm:px-5 sm:text-base md:w-[158px] dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            Zobacz wszystkie posty
+          </Link>
         </div>
+
+        {recentPosts.length > 0 && (
+          <section className="mb-16">
+            <h2 className="mb-8 text-center text-3xl font-bold text-gray-900">
+              Najnowsze posty
+            </h2>
+            <div className="mx-auto max-w-4xl">
+              {recentPosts.map((post) => (
+                <BlogPost key={post.id} post={post} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section className="text-center">
+          <h2 className="mb-8 text-3xl font-bold text-gray-900">
+            Funkcjonalności
+          </h2>
+          <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-3">
+            <div className="rounded-lg bg-white p-6 shadow-md">
+              <h3 className="mb-4 text-xl font-semibold">WordPress CMS</h3>
+              <p className="text-gray-600">
+                Zarządzaj treścią przez znany interfejs WordPress
+              </p>
+            </div>
+            <div className="rounded-lg bg-white p-6 shadow-md">
+              <h3 className="mb-4 text-xl font-semibold">Next.js Frontend</h3>
+              <p className="text-gray-600">
+                Szybki i nowoczesny frontend z React i TypeScript
+              </p>
+            </div>
+            <div className="rounded-lg bg-white p-6 shadow-md">
+              <h3 className="mb-4 text-xl font-semibold">REST API</h3>
+              <p className="text-gray-600">
+                Komunikacja przez WordPress REST API
+              </p>
+            </div>
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex flex-wrap items-center justify-center gap-[24px]">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   )
 }
