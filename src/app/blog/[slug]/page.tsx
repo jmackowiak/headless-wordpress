@@ -16,7 +16,8 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = await getPost(params.slug)
+  const { slug } = await params
+  const post = await getPost(slug)
 
   if (!post) {
     notFound()
@@ -32,29 +33,31 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <article className="mx-auto max-w-4xl">
-        <header className="mb-8">
-          <h1 className="mb-4 text-4xl font-bold text-gray-900">
-            {post.title.rendered}
-          </h1>
-          <div className="text-lg text-gray-500">{formatDate(post.date)}</div>
-        </header>
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-8">
+        <article className="mx-auto max-w-4xl rounded-lg bg-white p-8 shadow-md">
+          <header className="mb-8">
+            <h1 className="mb-4 text-4xl font-bold text-gray-900">
+              {post.title.rendered}
+            </h1>
+            <div className="text-lg text-gray-500">{formatDate(post.date)}</div>
+          </header>
 
-        <div
-          className="prose max-w-none leading-relaxed text-gray-700"
-          dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-        />
+          <div
+            className="prose prose-lg prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600 prose-strong:text-gray-900 max-w-none leading-relaxed text-gray-700"
+            dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+          />
 
-        <div className="mt-8 border-t border-gray-200 pt-6">
-          <Link
-            href="/blog"
-            className="inline-block rounded bg-gray-600 px-4 py-2 text-white transition-colors hover:bg-gray-700"
-          >
-            ← Powrót do bloga
-          </Link>
-        </div>
-      </article>
+          <div className="mt-8 border-t border-gray-200 pt-6">
+            <Link
+              href="/blog"
+              className="inline-block rounded bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
+            >
+              ← Powrót do bloga
+            </Link>
+          </div>
+        </article>
+      </div>
     </div>
   )
 }
